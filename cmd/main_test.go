@@ -14,13 +14,16 @@ import (
 func Test_nextValue(t *testing.T) {
 	conn, err := grpc.Dial(":8080", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		panic("No service")
+		t.Fatal("No connection")
 	}
 
 	client := proto.NewComplicatedClient(conn)
 
 	t.Run("Happy Path - at least one act", func(t *testing.T) {
-		n1, _ := catsFromRandom(client)
+		n1, err := catsFromRandom(client)
+		if err != nil {
+			t.Fatalf("No Random from service, %v", err)
+		}
 		if !strings.Contains(n1, "🐈") {
 			t.Error("Happy path Random should be positive")
 		}
