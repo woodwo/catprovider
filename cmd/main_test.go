@@ -11,10 +11,10 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 )
 
-func Test_nextValueFromCalculus(t *testing.T) {
+func Test_nextValue(t *testing.T) {
 	conn, err := grpc.Dial(":8080", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		panic("No calculus")
+		panic("No service")
 	}
 
 	client := proto.NewComplicatedClient(conn)
